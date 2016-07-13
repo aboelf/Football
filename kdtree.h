@@ -11,7 +11,7 @@ struct kdtreeNode
     typedef double value_type;
     value_type xyz[3];
     size_t index;
-    kdtreeNode(value_type a,value_type b,value_type c,size_t n)
+    kdtreeNode(value_type a,value_type b,value_type c,int n)
     {
         xyz[0]=a;
         xyz[1]=b;
@@ -38,9 +38,12 @@ public:
     MyKDTree();
     loadDate(QString filepath);
     showDate();
+    vector<int> findRange(kdtreeNode s, double range);
+    //writeDate();
 private:
     KDTree::KDTree<3,kdtreeNode> m_tree;
     vector<kdtreeNode> m_nodes;
+    int treesize;
 };
 
 #endif // KDTREE_H
