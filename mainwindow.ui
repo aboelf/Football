@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>618</height>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_changeOdd">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -50,7 +50,7 @@
      <string>查询</string>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="doubleSpinBox">
+   <widget class="QDoubleSpinBox" name="db_ChangeOdd">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -66,15 +66,23 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>510</y>
-      <width>261</width>
-      <height>31</height>
+      <x>370</x>
+      <y>570</y>
+      <width>321</width>
+      <height>61</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label_win">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>14</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>主胜</string>
        </property>
@@ -82,6 +90,12 @@
      </item>
      <item>
       <widget class="QLabel" name="label_draw">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>和</string>
        </property>
@@ -89,6 +103,12 @@
      </item>
      <item>
       <widget class="QLabel" name="label_lose">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>负</string>
        </property>
@@ -96,20 +116,10 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEdit_PR">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>470</y>
-      <width>361</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
-    <property name="geometry">
-     <rect>
-      <x>910</x>
+      <x>790</x>
       <y>470</y>
       <width>361</width>
       <height>31</height>
@@ -139,13 +149,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>Odd</string>
+     <string>赔率范围</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>860</x>
+      <x>760</x>
       <y>480</y>
       <width>54</width>
       <height>12</height>
@@ -155,112 +165,150 @@
      <string>PR</string>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget_2">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>510</y>
-      <width>261</width>
-      <height>31</height>
+      <x>500</x>
+      <y>500</y>
+      <width>211</width>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="label_win_2">
-       <property name="text">
-        <string>主胜</string>
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+       <property name="singleStep">
+        <double>0.050000000000000</double>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_draw_2">
-       <property name="text">
-        <string>和</string>
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+       <property name="singleStep">
+        <double>0.050000000000000</double>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_lose_2">
-       <property name="text">
-        <string>负</string>
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+       <property name="singleStep">
+        <double>0.050000000000000</double>
+       </property>
+       <property name="value">
+        <double>0.000000000000000</double>
        </property>
       </widget>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget_3">
+   <widget class="QLineEdit" name="lineEdit_fodds">
     <property name="geometry">
      <rect>
-      <x>910</x>
-      <y>510</y>
-      <width>261</width>
-      <height>31</height>
+      <x>500</x>
+      <y>480</y>
+      <width>211</width>
+      <height>20</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_win_3">
-       <property name="text">
-        <string>主胜</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_draw_3">
-       <property name="text">
-        <string>和</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_lose_3">
-       <property name="text">
-        <string>负</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   </widget>
+   <widget class="QLabel" name="label_bwin">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>560</y>
+      <width>101</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>贝叶斯</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="db_return">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>560</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="singleStep">
+     <double>0.500000000000000</double>
+    </property>
+    <property name="value">
+     <double>90.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_blose">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>560</y>
+      <width>101</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>贝叶斯</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="db_PRrange">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>510</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="value">
+     <double>11.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>480</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PR查询</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>750</x>
-      <y>510</y>
+      <x>790</x>
+      <y>550</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>查询</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>1180</x>
-      <y>510</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>查询</string>
+     <string>ODDPR(TEST)</string>
     </property>
    </widget>
    <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>tableView</zorder>
    <zorder>lineEdit</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>doubleSpinBox</zorder>
-   <zorder>lineEdit_2</zorder>
-   <zorder>lineEdit_3</zorder>
+   <zorder>pushButton_changeOdd</zorder>
+   <zorder>db_ChangeOdd</zorder>
+   <zorder>lineEdit_PR</zorder>
    <zorder>label</zorder>
    <zorder>label_2</zorder>
    <zorder>label_3</zorder>
-   <zorder>layoutWidget_2</zorder>
-   <zorder>layoutWidget_3</zorder>
+   <zorder>lineEdit_fodds</zorder>
+   <zorder>label_bwin</zorder>
+   <zorder>db_return</zorder>
+   <zorder>label_blose</zorder>
+   <zorder>db_PRrange</zorder>
+   <zorder>pushButton</zorder>
    <zorder>pushButton_2</zorder>
-   <zorder>pushButton_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -286,8 +334,8 @@
  <tabstops>
   <tabstop>lineEdit</tabstop>
   <tabstop>tableView</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>pushButton_changeOdd</tabstop>
+  <tabstop>db_ChangeOdd</tabstop>
  </tabstops>
  <resources/>
  <connections/>

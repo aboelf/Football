@@ -9,6 +9,8 @@
 #include "QDebug"
 #include "QStandardItem"
 #include "QMessageBox"
+#include "mysortfilterproxymodel.h"
+#include "algorithm"
 #pragma execution_character_set("UTF-8")
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,8 +39,7 @@ MainWindow::buildDict()
          <<"初威主"<<"初威和"<<"初威客"<<"终威主"<<"终威和"<<"终威客";
 
 //    dictmodel.setHorizontalHeaderLabels(headers);
-//    loadDictFile("dict.txt");
-//    filtdictmodel.setSourceModel(&dictmodel);
+    loadDictFile("dict");
 
     loadOriginDate("dict");
     loadTreefile();
@@ -105,6 +106,8 @@ MainWindow::loadTreefile()//读取文件并创建初赔、终赔、变化、PR�
 
 MainWindow::showCurrentModel(vector<int> indexs)
 {
+    if(currentModel.rowCount()>0)
+        currentModel.clear();
     for(int i=0;i<indexs.size();i++)
     {
         QString line=origindata[indexs[i]];
@@ -114,31 +117,25 @@ MainWindow::showCurrentModel(vector<int> indexs)
             currentModel.setItem(i,j,new QStandardItem(games[j]));
         }
     }
+
     ui->tableView->setModel(&currentModel);
     QMessageBox *box=new QMessageBox();
     box->setText(QString("%1个结果").arg(indexs.size()));
     box->show();
-    statistic();
+
+    statistic(ui->label_win,ui->label_draw,ui->label_lose);
 }
 
-void MainWindow::on_pushButton_clicked()
+MainWindow::getFOdds()
 {
-    QString val=ui->lineEdit->text();
-    QStringList vallist=val.split(" ");
-    vector<int> temp=avgchangetree.findRange(kdtreeNode(vallist[0].toDouble(),vallist[1].toDouble(),vallist[2].toDouble(),999),ui->doubleSpinBox->value());
-    if(temp.size()>0)
+    if(!ui->lineEdit_fodds->text().isEmpty())
     {
-        showCurrentModel(temp);
-        statistic();
+        QStringList foddlist=ui->lineEdit_fodds->text().split("\t");
+        fodds[0]=foddlist[0].toDouble();
+        fodds[1]=foddlist[1].toDouble();
+        fodds[2]=foddlist[2].toDouble();
     }
-    else
-    {
-        QMessageBox *box=new QMessageBox();
-        box->setText("无结果");
-        box->show();
-    }
-    //qDebug()<<vallist[0]<<vallist[1];
-    }
+}
 
 MainWindow::statistic(QLabel *win,QLabel *draw,QLabel *lose)
 {
@@ -183,9 +180,110 @@ MainWindow::statistic(QLabel *win,QLabel *draw,QLabel *lose)
     oddspercent[2]=double(result[2])/double(result[3])*100;
     handipercent[0]=double(handi[0])/double(handi[3])*100;
     handipercent[1]=double(handi[1])/double(handi[3])*100;
-    win->setText("|"+QString::number(oddspercent[0],'f',2)+"%|");
-    draw->setText("|"+QString::number(oddspercent[1],'f',2)+"%|");
-    lose->setText("|"+QString::number(oddspercent[2],'f',2)+"%|");
+    win->setText(QString::number(oddspercent[0],'f',2));
+    draw->setText(QString::number(oddspercent[1],'f',2));
+    lose->setText(QString::number(oddspercent[2],'f',2));
 
 
+}
+
+double MainWindow::BayesFormular(double x, double y, double z)
+{
+    return (x*y)/(x*y+z*(100-x))*100;
+}
+
+void MainWindow::on_pushButton_changeOdd_clicked()
+{
+    QString val=ui->lineEdit->text();
+    QStringList vallist=val.split(" ");
+    vector<int> temp=avgchangetree.findRange(kdtreeNode(vallist[0].toDouble(),vallist[1].toDouble(),vallist[2].toDouble(),999),ui->db_ChangeOdd->value());
+    if(temp.size()>0)
+    {
+        showCurrentModel(temp);
+    }
+    else
+    {
+        QMessageBox *box=new QMessageBox();
+        box->setText("无结果");
+        box->show();
+    }
+}
+
+void MainWindow::on_doubleSpinBox_2_valueChanged(double arg1)
+{
+    if(arg1>0)
+    {
+        getFOdds();
+        MySortFilterProxyModel *winoddfilterModel=new MySortFilterProxyModel(9);
+        winoddfilterModel->setFilterMinimumValue(fodds[0]-ui->doubleSpinBox_2->value());
+        winoddfilterModel->setFilterMaximumValue(fodds[0]+ui->doubleSpinBox_2->value());
+        winoddfilterModel->setSourceModel(&currentModel);
+        ui->tableView->setModel(winoddfilterModel);
+        statistic(ui->label_win,ui->label_draw,ui->label_lose);
+        double bwin=BayesFormular(ui->db_return->value()/fodds[0],ui->label_win->text().toDouble(),(100-ui->label_win->text().toDouble()));
+        ui->label_bwin->setText(QString("%1").arg(bwin));
+    }
+}
+
+void MainWindow::on_db_return_valueChanged(double arg1)
+{
+    double bwin=BayesFormular(ui->db_return->value()/fodds[0],ui->label_win->text().toDouble(),(100-ui->label_win->text().toDouble()));
+    ui->label_bwin->setText(QString("%1").arg(bwin));
+}
+
+void MainWindow::on_doubleSpinBox_4_valueChanged(double arg1)
+{
+    if(arg1>0)
+    {
+        getFOdds();
+        MySortFilterProxyModel *loseoddfilterModel=new MySortFilterProxyModel(11);
+        loseoddfilterModel->setFilterMinimumValue(fodds[2]-ui->doubleSpinBox_4->value());
+        loseoddfilterModel->setFilterMaximumValue(fodds[2]+ui->doubleSpinBox_4->value());
+        loseoddfilterModel->setSourceModel(&currentModel);
+        ui->tableView->setModel(loseoddfilterModel);
+        statistic(ui->label_win,ui->label_draw,ui->label_lose);
+        double blose=BayesFormular(ui->db_return->value()/fodds[2],ui->label_lose->text().toDouble(),(100-ui->label_lose->text().toDouble()));
+        ui->label_blose->setText(QString("%1").arg(blose));
+    }
+}
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    on_pushButton_changeOdd_clicked();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QString val=ui->lineEdit_PR->text();
+    QStringList vallist=val.split("\t");
+    vector<int> temp=PRtree.findRange(kdtreeNode(vallist[0].toDouble(),vallist[1].toDouble(),vallist[2].toDouble(),999),ui->db_PRrange->value());
+    if(temp.size()>0)
+    {
+        showCurrentModel(temp);
+    }
+    else
+    {
+        QMessageBox *box=new QMessageBox();
+        box->setText("无结果");
+        box->show();
+    }
+}
+
+void MainWindow::on_pushButton_2_clicked()//ODDCHANGEPR testfunction
+{
+    QString val1=ui->lineEdit->text();
+    QStringList val1list=val1.split(" ");
+    vector<int> temp1=avgchangetree.findRange(kdtreeNode(val1list[0].toDouble(),val1list[1].toDouble(),val1list[2].toDouble(),999),ui->db_ChangeOdd->value());
+    QString val2=ui->lineEdit_PR->text();
+    QStringList val2list=val2.split("\t");
+    vector<int> temp2=PRtree.findRange(kdtreeNode(val2list[0].toDouble(),val2list[1].toDouble(),val2list[2].toDouble(),999),ui->db_PRrange->value());
+
+    if(temp1.size()>0&&temp2.size()>0)
+    {
+        vector<int> v;
+        sort(temp1.begin(),temp1.end());
+        sort(temp2.begin(),temp2.end());
+        set_intersection(temp1.begin(),temp1.end(),temp2.begin(),temp2.end(),v.begin());
+        showCurrentModel(v);
+    }
 }

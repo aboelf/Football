@@ -14,7 +14,8 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    kdtree.cpp
+    kdtree.cpp \
+    mysortfilterproxymodel.cpp
 
 HEADERS  += mainwindow.h \
     kdtree.h \
@@ -23,7 +24,8 @@ HEADERS  += mainwindow.h \
     iterator.hpp \
     kdtree.hpp \
     node.hpp \
-    region.hpp
+    region.hpp \
+    mysortfilterproxymodel.h
 
 FORMS    += mainwindow.ui
 

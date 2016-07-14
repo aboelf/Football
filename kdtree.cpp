@@ -49,7 +49,7 @@ vector<int> MyKDTree::findRange(kdtreeNode s, double range)
 
     for(int i=0;i<withRange.size();i++)
     {
-        if(withRange[i].distance(s)<(range*2))
+        if(withRange[i].distance(s)<(range))
         {
             inrangeIndex.push_back(withRange[i].index);
         }
