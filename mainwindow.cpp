@@ -284,6 +284,13 @@ void MainWindow::on_pushButton_2_clicked()//ODDCHANGEPR testfunction
         sort(temp1.begin(),temp1.end());
         sort(temp2.begin(),temp2.end());
         set_intersection(temp1.begin(),temp1.end(),temp2.begin(),temp2.end(),v.begin());
-        showCurrentModel(v);
+        if(v.size()>0)
+            showCurrentModel(v);
+        else
+        {
+            QMessageBox *box=new QMessageBox();
+            box->setText("无结果");
+            box->show();
+        }
     }
 }

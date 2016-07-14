@@ -59,6 +59,9 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="singleStep">
+     <double>0.050000000000000</double>
+    </property>
     <property name="value">
      <double>0.050000000000000</double>
     </property>
