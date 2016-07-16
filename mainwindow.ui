@@ -69,8 +69,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>570</y>
+      <x>380</x>
+      <y>610</y>
       <width>321</width>
       <height>61</height>
      </rect>
@@ -118,6 +118,9 @@
       </widget>
      </item>
     </layout>
+    <zorder>label_win</zorder>
+    <zorder>label_draw</zorder>
+    <zorder>label_lose</zorder>
    </widget>
    <widget class="QLineEdit" name="lineEdit_PR">
     <property name="geometry">
@@ -295,6 +298,36 @@
      <string>ODDPR(TEST)</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>580</y>
+      <width>69</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>初盘赔率</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>终盘赔率</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_lodds">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>540</y>
+      <width>211</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>tableView</zorder>
@@ -312,6 +345,8 @@
    <zorder>db_PRrange</zorder>
    <zorder>pushButton</zorder>
    <zorder>pushButton_2</zorder>
+   <zorder>comboBox</zorder>
+   <zorder>lineEdit_lodds</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

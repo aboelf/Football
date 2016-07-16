@@ -27,6 +27,7 @@ public:
     showCurrentModel(vector<int> indexs);
 
     getFOdds();//获得初赔
+    getLOdds();
 private slots:
     void on_pushButton_changeOdd_clicked();
 
@@ -59,7 +60,7 @@ private:
     MyKDTree PRtree;
 
     double fodds[3];
-
+    double lodds[3];
 
 };
 

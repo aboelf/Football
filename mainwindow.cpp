@@ -137,6 +137,17 @@ MainWindow::getFOdds()
     }
 }
 
+MainWindow::getLOdds()
+{
+    if(!ui->lineEdit_lodds->text().isEmpty())
+    {
+        QStringList loddlist=ui->lineEdit_lodds->text().split("\t");
+        lodds[0]=loddlist[0].toDouble();
+        lodds[1]=loddlist[1].toDouble();
+        lodds[2]=loddlist[2].toDouble();
+    }
+}
+
 MainWindow::statistic(QLabel *win,QLabel *draw,QLabel *lose)
 {
     int result[4]={0,0,0,0};
@@ -213,15 +224,31 @@ void MainWindow::on_doubleSpinBox_2_valueChanged(double arg1)
 {
     if(arg1>0)
     {
-        getFOdds();
-        MySortFilterProxyModel *winoddfilterModel=new MySortFilterProxyModel(9);
-        winoddfilterModel->setFilterMinimumValue(fodds[0]-ui->doubleSpinBox_2->value());
-        winoddfilterModel->setFilterMaximumValue(fodds[0]+ui->doubleSpinBox_2->value());
-        winoddfilterModel->setSourceModel(&currentModel);
-        ui->tableView->setModel(winoddfilterModel);
-        statistic(ui->label_win,ui->label_draw,ui->label_lose);
-        double bwin=BayesFormular(ui->db_return->value()/fodds[0],ui->label_win->text().toDouble(),(100-ui->label_win->text().toDouble()));
-        ui->label_bwin->setText(QString("%1").arg(bwin));
+        if(ui->comboBox->currentIndex()==0)
+        {
+            getFOdds();
+            MySortFilterProxyModel *winoddfilterModel=new MySortFilterProxyModel(9);
+            winoddfilterModel->setFilterMinimumValue(fodds[0]-ui->doubleSpinBox_2->value());
+            winoddfilterModel->setFilterMaximumValue(fodds[0]+ui->doubleSpinBox_2->value());
+            winoddfilterModel->setSourceModel(&currentModel);
+            ui->tableView->setModel(winoddfilterModel);
+            statistic(ui->label_win,ui->label_draw,ui->label_lose);
+            double bwin=BayesFormular(ui->db_return->value()/fodds[0],ui->label_win->text().toDouble(),(100-ui->label_win->text().toDouble()));
+            ui->label_bwin->setText(QString("%1").arg(bwin));
+        }
+        else
+        {
+            getLOdds();
+            MySortFilterProxyModel *winoddfilterModel=new MySortFilterProxyModel(12);
+            winoddfilterModel->setFilterMinimumValue(lodds[0]-ui->doubleSpinBox_2->value());
+            winoddfilterModel->setFilterMaximumValue(lodds[0]+ui->doubleSpinBox_2->value());
+            winoddfilterModel->setSourceModel(&currentModel);
+            ui->tableView->setModel(winoddfilterModel);
+            statistic(ui->label_win,ui->label_draw,ui->label_lose);
+            double bwin=BayesFormular(ui->db_return->value()/lodds[0],ui->label_win->text().toDouble(),(100-ui->label_win->text().toDouble()));
+            ui->label_bwin->setText(QString("%1").arg(bwin));
+        }
+
     }
 }
 
@@ -235,15 +262,31 @@ void MainWindow::on_doubleSpinBox_4_valueChanged(double arg1)
 {
     if(arg1>0)
     {
-        getFOdds();
-        MySortFilterProxyModel *loseoddfilterModel=new MySortFilterProxyModel(11);
-        loseoddfilterModel->setFilterMinimumValue(fodds[2]-ui->doubleSpinBox_4->value());
-        loseoddfilterModel->setFilterMaximumValue(fodds[2]+ui->doubleSpinBox_4->value());
-        loseoddfilterModel->setSourceModel(&currentModel);
-        ui->tableView->setModel(loseoddfilterModel);
-        statistic(ui->label_win,ui->label_draw,ui->label_lose);
-        double blose=BayesFormular(ui->db_return->value()/fodds[2],ui->label_lose->text().toDouble(),(100-ui->label_lose->text().toDouble()));
-        ui->label_blose->setText(QString("%1").arg(blose));
+        if(ui->comboBox->currentIndex()==0)
+        {
+            getFOdds();
+            MySortFilterProxyModel *loseoddfilterModel=new MySortFilterProxyModel(11);
+            loseoddfilterModel->setFilterMinimumValue(fodds[2]-ui->doubleSpinBox_4->value());
+            loseoddfilterModel->setFilterMaximumValue(fodds[2]+ui->doubleSpinBox_4->value());
+            loseoddfilterModel->setSourceModel(&currentModel);
+            ui->tableView->setModel(loseoddfilterModel);
+            statistic(ui->label_win,ui->label_draw,ui->label_lose);
+            double blose=BayesFormular(ui->db_return->value()/fodds[2],ui->label_lose->text().toDouble(),(100-ui->label_lose->text().toDouble()));
+            ui->label_blose->setText(QString("%1").arg(blose));
+        }
+        else
+        {
+            getLOdds();
+            MySortFilterProxyModel *loseoddfilterModel=new MySortFilterProxyModel(14);
+            loseoddfilterModel->setFilterMinimumValue(lodds[2]-ui->doubleSpinBox_4->value());
+            loseoddfilterModel->setFilterMaximumValue(lodds[2]+ui->doubleSpinBox_4->value());
+            loseoddfilterModel->setSourceModel(&currentModel);
+            ui->tableView->setModel(loseoddfilterModel);
+            statistic(ui->label_win,ui->label_draw,ui->label_lose);
+            double blose=BayesFormular(ui->db_return->value()/lodds[2],ui->label_lose->text().toDouble(),(100-ui->label_lose->text().toDouble()));
+            ui->label_blose->setText(QString("%1").arg(blose));
+        }
+
     }
 }
 
@@ -283,7 +326,7 @@ void MainWindow::on_pushButton_2_clicked()//ODDCHANGEPR testfunction
         vector<int> v;
         sort(temp1.begin(),temp1.end());
         sort(temp2.begin(),temp2.end());
-        set_intersection(temp1.begin(),temp1.end(),temp2.begin(),temp2.end(),v.begin());
+        set_intersection(temp1.begin(),temp1.end(),temp2.begin(),temp2.end(),std::back_inserter(v));
         if(v.size()>0)
             showCurrentModel(v);
         else
@@ -294,3 +337,5 @@ void MainWindow::on_pushButton_2_clicked()//ODDCHANGEPR testfunction
         }
     }
 }
+
+
