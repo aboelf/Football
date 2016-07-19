@@ -31,6 +31,10 @@ struct kdtreeNode
         double z = xyz[2] - node.xyz[2];
         return (fabs(x)+fabs(y)+fabs(z));
     }
+    QString str_Node()
+    {
+        return QString("%1 %2 %3").arg(xyz[0]).arg(xyz[1]).arg(xyz[2]);
+    }
 };
 class MyKDTree
 {
@@ -38,6 +42,7 @@ public:
     MyKDTree();
     loadDate(QString filepath);
     showDate();
+    vector<kdtreeNode> getKdtreeNodes();
     vector<int> findRange(kdtreeNode s, double range);
     //writeDate();
 private:

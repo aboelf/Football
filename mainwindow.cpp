@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     buildDict();
-
+//    buildTest();
 //setStyle()//给视图某列某项值进行上色
     ui->tableView->resizeColumnsToContents();
     ui->tableView->setColumnWidth(0,30);//index
@@ -45,6 +45,23 @@ MainWindow::buildDict()
     loadTreefile();
 
     //loadfile
+}
+
+MainWindow::buildTest()
+{
+    int ran=qrand()%5194;
+    QString line=origindata[ran];
+    QStringList game=line.split("\t");
+    vector<kdtreeNode> nodes=avgchangetree.getKdtreeNodes();
+    ui->lineEdit->setText(nodes[ran-1].str_Node());
+    ui->pushButton_3->setText(QString::number(ran));
+    ui->lineEdit_fodds->setText(game[9]+"\t"+game[10]+"\t"+game[11]);
+    ui->lineEdit_lodds->setText(game[12]+"\t"+game[13]+"\t"+game[14]);
+    ui->lineEdit_PR->setText(game[15]+"\t"+game[16]+"\t"+game[17]);
+    double lwinodd=game[12].toDouble();
+    double lloseodd=game[14].toDouble();
+    ui->label_4->setText(game[19]+" | "+game[20]);
+
 }
 
 MainWindow::loadDictFile(QString filepath)
@@ -190,11 +207,12 @@ MainWindow::statistic(QLabel *win,QLabel *draw,QLabel *lose)
     oddspercent[1]=double(result[1])/double(result[3])*100;
     oddspercent[2]=double(result[2])/double(result[3])*100;
     handipercent[0]=double(handi[0])/double(handi[3])*100;
-    handipercent[1]=double(handi[1])/double(handi[3])*100;
+    handipercent[1]=double(handi[2])/double(handi[3])*100;
     win->setText(QString::number(oddspercent[0],'f',2));
     draw->setText(QString::number(oddspercent[1],'f',2));
     lose->setText(QString::number(oddspercent[2],'f',2));
-
+    ui->label_5->setText(QString::number(handipercent[0],'f',2));
+    ui->label_6->setText(QString::number(handipercent[1],'f',2));
 
 }
 
@@ -208,9 +226,23 @@ void MainWindow::on_pushButton_changeOdd_clicked()
     QString val=ui->lineEdit->text();
     QStringList vallist=val.split(" ");
     vector<int> temp=avgchangetree.findRange(kdtreeNode(vallist[0].toDouble(),vallist[1].toDouble(),vallist[2].toDouble(),999),ui->db_ChangeOdd->value());
+    //for test
+    vector<int>::iterator it=temp.begin();
+    for(;it<temp.end();it++)
+    {
+        if(*it==ui->pushButton_3->text().toInt())
+        {
+            temp.erase(it);
+            break;
+        }
+
+    }
+    //for test
+    sort(temp.begin(),temp.end());
     if(temp.size()>0)
     {
         showCurrentModel(temp);
+        ui->tableView->resizeColumnsToContents();
     }
     else
     {
@@ -327,6 +359,18 @@ void MainWindow::on_pushButton_2_clicked()//ODDCHANGEPR testfunction
         sort(temp1.begin(),temp1.end());
         sort(temp2.begin(),temp2.end());
         set_intersection(temp1.begin(),temp1.end(),temp2.begin(),temp2.end(),std::back_inserter(v));
+        //for test
+        vector<int>::iterator it=v.begin();
+        for(;it<v.end();it++)
+        {
+            if(*it==ui->pushButton_3->text().toInt())
+            {
+                v.erase(it);
+                break;
+            }
+
+        }
+        //for test
         if(v.size()>0)
             showCurrentModel(v);
         else
@@ -339,3 +383,8 @@ void MainWindow::on_pushButton_2_clicked()//ODDCHANGEPR testfunction
 }
 
 
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    buildTest();
+}

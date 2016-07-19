@@ -118,9 +118,6 @@
       </widget>
      </item>
     </layout>
-    <zorder>label_win</zorder>
-    <zorder>label_draw</zorder>
-    <zorder>label_lose</zorder>
    </widget>
    <widget class="QLineEdit" name="lineEdit_PR">
     <property name="geometry">
@@ -184,7 +181,7 @@
      <item>
       <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
        <property name="singleStep">
-        <double>0.050000000000000</double>
+        <double>0.010000000000000</double>
        </property>
       </widget>
      </item>
@@ -198,7 +195,7 @@
      <item>
       <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
        <property name="singleStep">
-        <double>0.050000000000000</double>
+        <double>0.010000000000000</double>
        </property>
        <property name="value">
         <double>0.000000000000000</double>
@@ -239,11 +236,14 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="maximum">
+     <double>100.000000000000000</double>
+    </property>
     <property name="singleStep">
      <double>0.500000000000000</double>
     </property>
     <property name="value">
-     <double>90.000000000000000</double>
+     <double>100.000000000000000</double>
     </property>
    </widget>
    <widget class="QLabel" name="label_blose">
@@ -328,6 +328,58 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>510</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Test</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>640</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Test</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>610</y>
+      <width>116</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>赢盘</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>输盘</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>tableView</zorder>
@@ -347,6 +399,10 @@
    <zorder>pushButton_2</zorder>
    <zorder>comboBox</zorder>
    <zorder>lineEdit_lodds</zorder>
+   <zorder>pushButton_3</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_5</zorder>
+   <zorder>label_6</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

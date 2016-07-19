@@ -41,6 +41,11 @@ MyKDTree::showDate()
     }
 }
 
+vector<kdtreeNode> MyKDTree::getKdtreeNodes()
+{
+    return m_nodes;
+}
+
 vector<int> MyKDTree::findRange(kdtreeNode s, double range)
 {
     vector<kdtreeNode> withRange;
@@ -49,10 +54,10 @@ vector<int> MyKDTree::findRange(kdtreeNode s, double range)
 
     for(int i=0;i<withRange.size();i++)
     {
-        if(withRange[i].distance(s)<(range))
-        {
+//        if(withRange[i].distance(s)<(range))
+//        {
             inrangeIndex.push_back(withRange[i].index);
-        }
+//        }
     }
 
     return inrangeIndex;
